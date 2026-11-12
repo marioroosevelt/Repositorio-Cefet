@@ -1,0 +1,58 @@
+#include <stdio.h>
+#define cursos 20
+
+typedef struct{
+    int codigo;
+    int diaMatricula;
+}Cursos;
+
+void leitura (Cursos vetorCurso[]); //Protótipo de função de inicialização
+int busca (Cursos vetCursoP[], int codigo); // Protótipo de função para busca de código
+
+int main(){
+    int cod;
+    int validaCursos;
+
+    Cursos vetorC[cursos];
+
+    leitura (vetorC);
+
+    printf("Digite o código do curso a ser buscado:\n");
+    scanf("%d", &cod);
+
+    while (cod != 0){
+
+        validaCursos = busca (vetorC, cod);
+
+        if(validaCursos == -1){
+            printf("Curso Inexistente\n");
+        }
+
+        printf("Digite o código do curso a ser buscado:\n");
+        scanf("%d", &cod);
+    }
+
+    return 0;
+}
+
+void leitura (Cursos vetorCurso[]){
+    for(int n = 0; n < cursos; n++){
+        printf("Digite o código do curso:\n");
+        scanf("%d", &vetorCurso[n].codigo);
+        printf("Digite o dia da Matrícula do curso de código %d\n", vetorCurso[n].codigo);
+        scanf("%d", &vetorCurso[n].diaMatricula);
+    }
+}
+
+int busca (Cursos vetCursoP[], int codigo){
+
+//Loop de busca linear no vetor
+    for(int i = 0; i < cursos; ++i){
+        if(vetCursoP[i].codigo == codigo){
+            printf("O dia da matrícula é:\n");
+            printf("%d\n", vetCursoP[i].diaMatricula);
+            return 0;
+        }
+    }
+    return -1;
+}
