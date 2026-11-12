@@ -1,0 +1,61 @@
+#include <stdio.h>
+#define qt 1000
+
+typedef struct{ //struct sempre fora do main e acima do protótipo da função quando a função tem como parâmetro um vetor de struct ou algo similar
+    int codigo;
+    float preco;
+    int qtProduto;
+}Produto;
+
+int leitura(Produto vetorStruct[], float *precoMedio); //Protótipo da Função
+
+int main()
+{   
+    float pMedio = 0;
+
+    Produto vetProduto[qt]; //Vetor de struct
+
+    int qtDiferente = leitura(vetProduto, &pMedio); //Função que inicializa o vetor
+
+    for(int i = 0; i < qtDiferente; i++){ //Loop da mensagem de comparação do preço individual para com a média de preços
+        if(vetProduto[i].preco > pMedio){
+             printf("O preço unitário do produto, de código %d, está acima do preço unitário médio dos produtos\n", vetProduto[i].codigo);
+        }
+        if(vetProduto[i].preco == pMedio){
+            printf("O preço unitário do produto, de código %d, está igual ao preço unitário médio dos produtos\n", vetProduto[i].codigo);
+        }
+        if(vetProduto[i].preco < pMedio){
+        printf("O preço unitário do produto, de código %d, está abaixo do preço unitário médio dos produtos\n", vetProduto[i].codigo);
+        }
+    }
+
+    return 0;
+}
+
+int leitura(Produto vetorStruct[], float *precoMedio){
+
+    int contadorProduto = 0;
+    float soma = 0;
+
+    printf("Digite o código do produto [XXX]:\n");
+    scanf("%d", &vetorStruct[contadorProduto].codigo);
+
+    while(vetorStruct[contadorProduto].codigo != 0){
+
+        printf("Digite o preço unitário do produto:\n");
+        scanf("%f", &vetorStruct[contadorProduto].preco);
+        printf("Digite a quantidade em estoque desse produto:\n");
+        scanf("%d", &vetorStruct[contadorProduto].qtProduto);
+
+        soma += vetorStruct[contadorProduto].preco;
+
+        contadorProduto++;
+
+        printf("Digite o código do produto [XXX]:\n");
+        scanf("%d", &vetorStruct[contadorProduto].codigo);
+    }
+
+      (*precoMedio) = soma/contadorProduto;
+
+    return contadorProduto;
+}
