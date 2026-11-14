@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+float calculaIR (float salario); //Protótipo da função que calcula o Imposto de Renda
+
+int main()
+{
+    int qtFuncionario;
+
+    printf("Digite a quantidade de funcionários da empresa:\n");
+    scanf("%d", &qtFuncionario);
+
+    char nome[41];
+    float salarioBruto, desconto, salarioLiquido;
+
+    for(int i = 0; i < qtFuncionario; i++){
+
+        printf("Digte o nome do funcionário:\n");
+        scanf(" %40[^\n]", nome); //%[^\n] é usado para realizar a leitura de um vetor de tipo char e considera espaços
+        printf("Digite o salário do funcionário:\n");
+        scanf("%f", &salarioBruto);
+
+        desconto = calculaIR(salarioBruto);
+
+        salarioLiquido = salarioBruto - desconto;
+
+        printf("O salário do funcionário, %s, ao subtrair dos descontos de %.2f, é de:\n", nome, desconto);
+        printf("%.2f\n", salarioLiquido);
+
+    }
+
+    return 0;
+}
+
+float calculaIR (float salario){
+    
+    float desconto;
+
+    if(salario <= 1800){
+        desconto = 0;
+        return desconto;
+    }
+    if(salario > 1800 && salario <= 2900){
+        desconto = (15 * salario)/100;
+        return desconto;
+    }
+    if(salario > 2900){
+        desconto = (27.5 * salario)/100;
+        return desconto;
+    }
+
+    return 0;
+}
