@@ -1,0 +1,45 @@
+#include <stdio.h>
+#define qt 1000
+
+void ocorrencia(int vetor[], int tamanho);
+
+int main()
+{
+    int inteiro[qt];
+    int t = 0;
+
+    printf("Digite um número inteiro:\n");
+    scanf("%d", &inteiro[t]);
+
+    while(inteiro[t] != 0){
+
+        t++;
+
+        printf("Digite um número inteiro:\n");
+        scanf("%d", &inteiro[t]);
+    }
+
+    ocorrencia(inteiro, t);
+
+    return 0;
+}
+
+void ocorrencia(int vetor[], int tamanho)
+{   
+    int valida;
+
+    for(int i = 0; i < tamanho; i++){
+
+        valida = 0;
+
+        for(int j = 0; j < i; j++){
+            if(vetor[j] == vetor[i]){
+                valida = 1;
+            }
+        }
+
+        if(valida == 0){
+            printf("%d ", vetor[i]);
+        }
+    }
+}
