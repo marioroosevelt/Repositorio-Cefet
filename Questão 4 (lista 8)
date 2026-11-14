@@ -1,0 +1,109 @@
+#include <stdio.h>
+#define qt 10000
+
+//Struct de Livros, responsável por guardar o código de um conjunto de n livros
+typedef struct{
+    int codigo;
+    int qntdLivros;
+    int livrosEmprestados;
+}Livros;
+
+void leitura (Livros vetorStruct[], int *qtLivros); //Protótipo da função de inicialização ou leitura 
+void ordena (Livros vetorStruct[], int tamanho); //Protótipo da função de ordenação por Bubble Sort
+int busca (const Livros vetorStruct[], int cod, int tamanho); //Protótipo da função de busca binária
+
+int main()
+{
+
+    int c, posicao, qtLivros = 0;
+    Livros vetLivros[qt];
+
+    leitura (vetLivros, &qtLivros); //Dá o valor, por posição, de cada struct
+    ordena (vetLivros, qtLivros); //Ordena o vetor após ser preenchido
+
+    printf("Digite o código do livro a ser emprestado:\n");
+    scanf("%d", &c);
+
+    while(c != 0){
+
+        posicao = busca (vetLivros, c, qtLivros);
+
+        if(posicao == -1){
+            printf("Livro inexistente\n");
+        }
+        if(posicao >= 0){
+            if(vetLivros[posicao].qntdLivros - vetLivros[posicao].livrosEmprestados == 0){
+                printf("Livro não disponível para empréstimo\n");
+            }else{
+            printf("Livro disponível para empréstimo\n");
+            }
+        }
+
+        printf("Digite o código do livro a ser emprestado:\n");
+        scanf("%d", &c);
+    }
+
+    return 0;
+}
+
+
+void leitura (Livros vetorStruct[], int *qntdLivros){
+
+    int contador = 0; //Responsável por atualizar, a cada loop, o endereço do vetor
+
+    printf("Digite o código do livro:\n");
+    scanf("%d", &vetorStruct[contador].codigo);
+
+    while(vetorStruct[contador].codigo != 0){
+
+        printf("Digite a quantidade de livros armazenados:\n");
+        scanf("%d", &vetorStruct[contador].qntdLivros);
+        printf("Digite a quantidade de livros que foram emprestados:\n");
+        scanf("%d", &vetorStruct[contador].livrosEmprestados);
+
+        contador++;
+        (*qntdLivros)++; //Ao desindexar, muda diretamente o valor do inteiro que guarda a quantidade de livros
+
+        printf("Digite o código do livro:\n");
+        scanf("%d", &vetorStruct[contador].codigo);
+    }
+}
+
+void ordena (Livros vetorStruct[], int tamanho){
+
+    Livros aux; //A variável auxiliar deve ser do mesmo tipo que a struct
+
+    for(int n = 0; n < tamanho; n++){                                   //contador de passadas
+        for(int i = 0; i < tamanho - 1; i++){                           // Loop para a ordenação, via Bubble Sort
+            if(vetorStruct[i].codigo > vetorStruct[i+1].codigo){        //Se a primeira posição for maior que a sua adjacente, então haverá troca
+                aux = vetorStruct[i];                                   //Adiciona-se uma terceira cadeira temporária, para guardar o valor da primeira posição
+                vetorStruct[i] = vetorStruct[i+1];                      //O valor da posição a frente é dado para a posição anterior
+                vetorStruct[i+1] = aux;                                 //O valor guardado de maneira temporária é passado
+            }
+        }
+    }
+}
+
+int busca (const Livros vetorStruct[], int cod, int tamanho){
+
+    int meio;
+    int maior = tamanho - 1;
+    int menor = 0;
+
+    while (menor <= maior){
+
+        meio = (maior + menor)/2;
+
+        if(cod == vetorStruct[meio].codigo){
+            return meio;
+        }
+        if(cod < vetorStruct[meio].codigo){
+            maior = meio-1;
+        }
+        if(cod > vetorStruct[meio].codigo){
+            menor = meio+1;
+        }
+    }
+
+    return -1;
+}
