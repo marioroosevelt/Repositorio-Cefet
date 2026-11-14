@@ -1,0 +1,42 @@
+#include <stdio.h>
+#define qtvotos 5000
+#define valorVoto 21
+
+//Protótipo das funções
+void inicializa (int vetor[]);
+void exibe (int vetorPren[]);
+
+int main ()
+{
+    int vetorVotos[qtvotos];
+
+    inicializa(vetorVotos);
+
+    exibe(vetorVotos);
+
+    return 0;
+}
+
+void inicializa (int vetor[]){
+    //Loop para preencher o vetor, até então vazio
+    for(int i = 0; i < qtvotos; i++){ 
+        printf("Digite o valor de seu voto, escolhendo um número de 1 até 20\n");
+        scanf("%d", &vetor[i]);
+    }
+}
+
+void exibe (int vetorPren[]){
+    int resposta; //Contador que percorre os 5000 votos
+    int valor; //contador que percorre as frequências de 1-20
+    int frequencia[valorVoto] = {0};
+
+    //Loop que seleciona o valor de um elemento do array vetorVotos e usa esse valor como subscrito na frequência do array para determinar o elemento a ser incrementado
+    for(resposta = 0;  resposta < qtvotos; resposta++){
+        ++frequencia[vetorPren[resposta]];
+    }
+    printf("%s %17s\n", "Nota", "Frequência");
+
+    for(valor = 1; valor < valorVoto; valor++){
+    printf("%d %17d\n", valor, frequencia[valor]);
+    }
+}
