@@ -1,0 +1,101 @@
+#include <stdio.h>
+#include<string.h>
+#define qt 2000
+
+typedef struct{
+    char nome[31]; //Se usa 31, porque se soma +1 ao máximo de caracteres exigido, dado que após o final da string há "/0"
+    float preco;
+} Produto;
+
+void leitura(Produto vetor1[], int *contador); //Protótipo da função de inicialização do vetor de Struct
+void ordena(Produto vetor2[], int tamanho); //Protótipo da função de ordenação, via Bubble Sort
+int busca(const Produto vetor3[], char nomeProduto[], int tamanho); //Protótipo da função de busca, via busca binária
+
+int main()
+{
+    Produto vetProdutos[qt];
+    int contaProduto = 0;
+    int posicao;
+
+    leitura(vetProdutos, &contaProduto);
+    ordena(vetProdutos, contaProduto);
+
+    printf("Digite o nome do produto a ser buscado:\n");
+    scanf(" %30[^\n]", vetProdutos[contaProduto].nome); //O %[^\n] realiza uma leitura de string considerando os espaços, e se usa o número antes dele como limitador de caracteres a serem lidos
+
+    while(strcmp(vetProdutos[contaProduto].nome,"Fim") != 0){ //Enquanto o nome do produto for diferente de "Fim" o loop é rodado, strcmp compara strings por ordem alfabérica, se forem strings iguais retorna 0
+
+        posicao = busca(vetProdutos, vetProdutos[contaProduto].nome, contaProduto);
+
+        if(posicao == -1){
+            printf("Produto Inexistente!\n");
+        }else{
+            printf("O preço unitário do produto, %s, é:\n", vetProdutos[posicao].nome);
+            printf("%.2f\n", vetProdutos[posicao].preco);
+        }
+
+        printf("Digite o nome do produto a ser buscado:\n");
+        scanf(" %30[^\n]", vetProdutos[contaProduto].nome);
+
+    }
+
+    return 0;
+}
+
+void leitura(Produto vetor1[], int *contador){
+
+    printf("Digite o preço por unidade do produto:\n");
+    scanf("%f", &vetor1[*contador].preco);
+    printf("Digite o nome do produto:\n");
+    scanf(" %30[^\n]", vetor1[*contador].nome);
+
+    while(strcmp(vetor1[*contador].nome, "FIM") != 0){ //Realiza uma comparação similar ao loop de busca só mudando o string a ser comparado. logo seguindo a mesma lógica
+
+        (*contador)++;
+
+        printf("Digite o preço por unidade do produto:\n");
+        scanf("%f", &vetor1[*contador].preco);
+        printf("Digite o nome do produto:\n");
+        scanf(" %30[^\n]", vetor1[*contador].nome);
+
+    }
+}
+
+void ordena(Produto vetor2[], int tamanho){
+
+    Produto aux;
+
+    for(int n = 0; n < tamanho; n++){
+        for(int i = 0; i < tamanho - 1; i++){
+            if(strcmp(vetor2[i].nome,vetor2[i+1].nome)>0){ //Compara a string de nome do vetor de struct na posição denominada por i com a string do vetor de struct denominada por i+1, se a string for "maior" strcmp retorna um positivo qualquer
+                aux = vetor2[i];
+                vetor2[i] = vetor2[i+1];
+                vetor2[i+1] = aux;
+            }
+        }
+    }
+}
+
+int busca(const Produto vetor3[], char nomeProduto[], int tamanho){
+
+    int meio;
+    int final = tamanho - 1;
+    int inicio = 0;
+
+    while(inicio <= final){
+
+        meio = (inicio + final)/2;
+
+        if(strcmp(nomeProduto,vetor3[meio].nome)==0){
+            return meio;
+        }
+        if(strcmp(nomeProduto,vetor3[meio].nome)<0){
+            final = meio - 1;
+        }
+        if(strcmp(nomeProduto,vetor3[meio].nome)>0){
+            inicio = meio + 1;
+        }
+    }
+
+    return -1;
+}
