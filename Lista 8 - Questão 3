@@ -9,7 +9,8 @@ typedef struct{
 void leitura (Cursos vetorCurso[]); //Protótipo de função de inicialização
 int busca (Cursos vetCursoP[], int codigo); // Protótipo de função para busca de código
 
-int main(){
+int main()
+{
     int cod;
     int validaCursos;
 
