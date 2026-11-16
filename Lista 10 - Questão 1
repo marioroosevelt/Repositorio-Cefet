@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+void mediaTurma(float matrizTurma[][4], int tamanhoTurma); //Para declaração de uma matriz há a necessidade de informar a quantidade de colunas, haja vista que o compilador necessita saber quantos componentes existem por linha
+
+int main()
+{
+    float notas[30][4];
+    int tamanho = 3;
+
+    for(int a = 0; a < tamanho; a++){ //Loop para contagem de linhas
+
+        for(int p = 0; p < 4; p++){ //Loop para a contagem de colunas
+            printf("Digite a nota da prova:\n");
+            scanf("%f", &notas[a][p]);
+        }
+    }
+
+    mediaTurma(notas, tamanho);
+
+    return 0;
+}
+
+void mediaTurma(float matrizTurma[][4], int tamanhoTurma){ 
+
+    float soma = 0;
+    float media;
+
+    for(int i = 0; i < tamanhoTurma; i++){ //Loop para contagem de linhas
+
+        for(int j = 0; j < 4; j++){ //Loop para a contagem de colunas
+            soma += matrizTurma[i][j];
+        }
+
+        media = soma/4;
+
+        soma = 0;
+
+        printf("A média do aluno %d, é de %.1f\n", i + 1, media);
+    }
+}
