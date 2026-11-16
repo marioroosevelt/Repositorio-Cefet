@@ -1,1 +1,55 @@
+#include <stdio.h>
 
+void exibeVenda(int matrizGol[][12], float vetorPreco[]);
+
+int main()
+{   
+    int anos = 6;
+    int meses = 12;
+    int ano = 2010;
+    int carrosVendidos [anos][meses];
+    float preco [anos];
+
+    //Loop para colocar o preço do Gol por ano
+    for(int p = 0; p < anos; p++){ 
+
+        printf("Digite o preço do carro Gol, no ano de %d:\n", ano);
+        scanf("%f", &preco[p]);
+
+        ano++;
+    }
+
+    //Loop para colocar a quantidade de carros vendidas por mes a cada ano
+    for(int i = 0; i < anos; i++){
+        for(int j = 0; j < meses; j++){
+            printf("Digite a quantidade de carros Gol vendidas no mês %d:\n", j + 1);
+            scanf("%d", &carrosVendidos[i][j]);
+        }
+    }
+
+    exibeVenda(carrosVendidos, preco);
+
+    return 0;
+}
+
+void exibeVenda(int matrizGol [][12], float vetorPreco[]){
+
+    int totalAnos = 6;
+    int totalMeses = 12;
+    float valorMensal;
+    float soma = 0;
+    int ano = 2010;
+
+    for(int i = 0; i < totalAnos; i++){
+        for(int j = 0; j < totalMeses; j++){
+            valorMensal = matrizGol [i][j] * vetorPreco[i];
+            soma += valorMensal; 
+        }
+
+        printf("O valor total reais em vendas, no ano %d, é:\n", ano);
+        printf("%.2f\n", soma);
+
+        ano++;
+        soma = 0;
+    }
+}
