@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+void exibe(int matriz[][12]);
+
+int main()
+{   
+    int ano = 2010;
+    int anos = 6;
+    int meses = 12;
+    int carrosVendidos [6][12];
+
+    for(int i = 0; i < anos; i++){
+
+        for(int j = 0; j < meses; j++){
+
+            printf("Digite a quantidade de carros vendida no mês %d do ano de %d:\n", j + 1, ano);
+            scanf("%d", &carrosVendidos[i][j]);
+
+        }
+
+        ano++;
+    }
+
+    exibe(carrosVendidos);
+
+    return 0;
+}
+
+void exibe(int matriz[][12]){
+
+    int totalMeses = 12;
+    int totalAnos = 6;
+    int soma = 0;
+
+    for(int j = 0; j < totalMeses; j++){
+        for(int i = 0; i < totalAnos; i++){
+            soma += matriz[i][j];
+        }
+
+        printf("A quantidade total de carros vendidas no mês %d nos anos de 2010 até 2015 é:\n", j+1);
+        printf("%d\n", soma);
+
+        soma = 0;
+    }
+}
